@@ -1,4 +1,5 @@
 const container = document.querySelector('div.container');
+makeGrid(16,16);
 
 function makeGrid(row,colu){
     container.style.setProperty('--grid-rows',row);
@@ -9,14 +10,32 @@ function makeGrid(row,colu){
         newBox.classList.add('grid-box');
         container.appendChild(newBox);
     }
+
+    const gridBoxes = document.querySelectorAll('.grid-box');
+    gridBoxes.forEach((box) => {
+        box.addEventListener('mouseover', (e) => {
+            e.target.classList.add('color-change')
+        });
+    });
 }
 
-makeGrid(16,16);
+function removeGrid(){
+    while (container.firstChild){
+        container.removeChild(container.firstChild);
+    }
+}
 
-const gridBoxes = document.querySelectorAll('.grid-box');
-gridBoxes.forEach((box) => {
-    box.addEventListener('mouseover', () => {
-        box.classList.add('color-change')
-    });
+const clearButton = document.querySelector('#clear-button');
+clearButton.addEventListener('click', () => {
+    
+    let userInput = prompt('How many squares per side do you want the new grid to be?');
+    if (userInput < 101){
+        removeGrid();
+        makeGrid(userInput,userInput);;
+    } else {
+        alert('That number is to high. Try again.')
+    }
+        
+    
 });
 
